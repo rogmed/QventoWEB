@@ -1,0 +1,32 @@
+:root{
+    --dark: #16191c;
+    --dark-x:#1e2126;
+    --light:#ffffff;
+
+}
+
+body{
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 300;
+    color: var(--light);
+}
+
+.bg-dark{background-color: var(--dark) !important;}
+.bg-dark-x{ background-color: var(--dark-x);}
+
+.form-control, .btn{
+    min-width: 3.125rem;
+    line-height: initial;
+}
+
+.img-1{
+    background-image: url('~/images/img2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.img-2 {
+    background-image: url('~/images/img1.png');
+    background-size: cover;
+    background-position: center;
+}
