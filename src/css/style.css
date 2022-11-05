@@ -20,13 +20,13 @@ body{
 }
 
 .img-1{
-    background-image: url('~/images/img2.png');
+    background-image: url('../images/img2.png');
     background-size: cover;
     background-position: center;
 }
 
 .img-2 {
-    background-image: url('~/images/img1.png');
+    background-image: url('../images/img1.png');
     background-size: cover;
     background-position: center;
 }
