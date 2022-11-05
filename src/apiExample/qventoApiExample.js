@@ -1,6 +1,6 @@
 ﻿var request = new XMLHttpRequest();
 
-var url = 'https://localhost:44371/qvento/'
+var url = 'https://qvento.azurewebsites.net/qvento/'
 var qventoId = '1';
 
 request.open('GET', url + qventoId);
@@ -9,21 +9,22 @@ request.onload = function() {
 	var response = request.response;
 	var qvento = JSON.parse(response);
 
-	var qventoId = qvento.qventoId;
-	var title = qvento.title;
-	var description = qvento.description;
+	var attributes = [];
+	attributes.push(qvento.qventoId);
+	attributes.push(qvento.title);
+	attributes.push(qvento.description);
 
-	console.log("Id: " + qventoId)
-	console.log("Title: " + title)
-	console.log("Description: " + description)
+	const newDiv = document.createElement('div');
 
 	//Show qvento on page
-	const newDiv = document.createElement('div');
-	const newContent = document.createTextNode(title);
-	newDiv.appendChild(newContent);
+	attributes.forEach(function (attribtue, index, array) {
+		const newContent = document.createTextNode(attribtue + " - ");
+		newDiv.appendChild(newContent);
 
-	const currentDiv = document.getElementById("div1");
-	document.body.insertBefore(newDiv, currentDiv);
+		const currentDiv = document.getElementById("div1");
+		document.body.insertBefore(newDiv, currentDiv.nextSibling);
+    })
+	
 };
 
 request.send();
