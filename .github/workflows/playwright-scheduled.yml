@@ -51,7 +51,8 @@ jobs:
       uses: actions/download-artifact@v3
       id: download
     - name: Publish to external repo
-      if: always()
+      # Only upload if we're running from the staticwebdev repo
+      if: "${{ env.PAT_EXISTS != '' }}"
       uses: peaceiris/actions-gh-pages@v3.7.3
       with:
         external_repository: mspnp/intern-js-pipeline
