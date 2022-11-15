@@ -30,3 +30,6 @@ body{
     background-size: cover;
     background-position: center;
 }
+.navbar{
+    font-size: 15px;
+}

@@ -1,21 +1,25 @@
-const aplication = document.querySelector('.container')
-
-const url = 'https://qvento.azurewebsites.net/all-qventos'
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-    data.forEach(element => {
-        const p = document.createElement('p')
-        p.setAttribute('qventoId',element.qventoId)
-        p.innerHTML = element.title
-        p.addEventListener('click', function(){
-            window.location.href = 'https://qvento.azurewebsites.net/qvento/'+ element.qventoId
-        })
-        aplication.appendChild(p)
+const listEventos= async()=>{
+    const response = await fetch("https://qvento.azurewebsites.net/all-qventos");
+    const eventos = await response.json();
+    
+    let tableBody=``;
+    eventos.forEach((evento, index) => {
         
-        
+        tableBody+=`<tr>
+        <td class="centered">${evento.qventoId}</td>
+        <td class="centered">${evento.title}</td>
+        <td class="centered">${evento.location}</td>
+        <td class="centered">${evento.dateCreated}</td>
+        <td class="centered">${evento.dateOfQvento}</td>
+        </tr>`;  
+          
     });
-   
-})
-.catch(err => console.log(err))
+    
+    document.getElementById("tableBody_Eventos").innerHTML = tableBody;
+    
+    };
+    
+    window.addEventListener("load", function(){
+        listEventos();
+    });
+    
