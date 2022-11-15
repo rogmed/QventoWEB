@@ -8,6 +8,7 @@ const listEventos= async()=>{
         tableBody+=`<tr>
         <td class="centered">${evento.qventoId}</td>
         <td class="centered">${evento.title}</td>
+        <td class="centered">${evento.description}</td>
         <td class="centered">${evento.location}</td>
         <td class="centered">${evento.dateCreated}</td>
         <td class="centered">${evento.dateOfQvento}</td>
