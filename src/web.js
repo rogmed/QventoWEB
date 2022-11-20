@@ -12,11 +12,12 @@ const listEventos= async()=>{
         <td class="centered">${evento.location}</td>
         <td class="centered">${evento.dateCreated}</td>
         <td class="centered">${evento.dateOfQvento}</td>
-        </tr>`;  
-          
+        </tr>`;           
     });
     
     document.getElementById("tableBody_Eventos").innerHTML = tableBody;
+
+   
     
     };
     
