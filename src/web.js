@@ -13,14 +13,14 @@ const listEventos= async()=>{
         <td class="centered">${evento.dateCreated}</td>
         <td class="centered">${evento.dateOfQvento}</td>
         </tr>`;  
-          
+
     });
-    
+
     document.getElementById("tableBody_Eventos").innerHTML = tableBody;
-    
+        
     };
-    
+        
     window.addEventListener("load", function(){
         listEventos();
     });
-    
+   
