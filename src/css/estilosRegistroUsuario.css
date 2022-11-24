@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+html, body{
+    background-color: rgb(22, 22, 22);
+}
+.container{
+    margin-top: 3em;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+}
+label{
+    float: left;
+}
+.iniciarSesion{
+    background: white;
+
+    border: solid 1.3px rgb(65, 65, 167);
+    transition: all .3s linear;
+}
+.iniciarSesion:hover{
+    background-color: rgb(65, 65, 167);
+    color: white;
+    border: none;
+}
+.registrar{
+    
+        background: white;
+        border: solid 1.3px rgb(41, 155, 55);
+        transition: all .3s linear;
+    
+}
+.registrar:hover{
+    background-color: rgb(41, 155, 55);
+    color: white;
+    border: none;
+}
