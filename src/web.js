@@ -16,14 +16,14 @@ const listEventos= async()=>{
         <td class="centered">${evento.status}</td>
         </tr>`;           
     });
-    
-    document.getElementById("tableBody_Eventos").innerHTML = tableBody;
 
+    document.getElementById("tableBody_Eventos").innerHTML = tableBody;
+        
    
     
     };
-    
+        
     window.addEventListener("load", function(){
         listEventos();
     });
-    
+   
