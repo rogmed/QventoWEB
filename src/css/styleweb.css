@@ -11,3 +11,8 @@ background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, F
 .img-fluid{
     width: 100% \9;
 }
+
+h1{
+    text-align: center;
+    margin-top: 100dp;
+}

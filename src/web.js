@@ -1,11 +1,11 @@
-const listEventos= async()=>{
+const listEventos = async () => {
     const response = await fetch("https://qvento.azurewebsites.net/api/qventos");
     const eventos = await response.json();
     
-    let tableBody=``;
+    let tableBody = ``;
     eventos.forEach((evento, index) => {
         
-        tableBody+=`<tr>
+        tableBody += `<tr>
         <td class="centered">${evento.qventoId}</td>
         <td class="centered">${evento.createdBy}</td>
         <td class="centered">${evento.title}</td>
@@ -23,7 +23,6 @@ const listEventos= async()=>{
     
     };
         
-    window.addEventListener("load", function(){
+window.addEventListener("load", function () {
         listEventos();
     });
-   
