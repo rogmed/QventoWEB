@@ -1,5 +1,5 @@
 const listEventos= async()=>{
-    const response = await fetch("https://qvento.azurewebsites.net/all-qventos");
+    const response = await fetch("https://qvento.azurewebsites.net/api/qventos");
     const eventos = await response.json();
     
     let tableBody=``;
@@ -17,6 +17,8 @@ const listEventos= async()=>{
 
     document.getElementById("tableBody_Eventos").innerHTML = tableBody;
         
+   
+    
     };
         
     window.addEventListener("load", function(){
