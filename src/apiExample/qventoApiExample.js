@@ -1,6 +1,6 @@
 ﻿var request = new XMLHttpRequest();
 
-var url = 'https://qvento.azurewebsites.net/api/qventos/'
+var url = 'https://qvento-api.azurewebsites.net/api/qventos/'
 var qventoId = '100';
 
 request.open('GET', url + qventoId);

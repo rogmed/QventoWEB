@@ -14,7 +14,7 @@ function callbackFunction(e) {
 	event.preventDefault();
 
 	// Abre la petición, elije formato JSON y envía el JSON en forma de string
-	request.open('POST', 'https://qvento.azurewebsites.net/api/user/login');
+	request.open('POST', 'https://qvento-api.azurewebsites.net/api/user/login');
 	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 	request.send(JSON.stringify(formJson(e)));
 

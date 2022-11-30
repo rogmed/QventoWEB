@@ -17,7 +17,7 @@ formulario.addEventListener('submit', function (e) {
 
 
 const listEventos = async () => {
-    const response = await fetch("https://qvento.azurewebsites.net/api/qventos", {
+    const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos", {
         method: 'POST',
         body: datos
 
