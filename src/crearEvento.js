@@ -1,6 +1,6 @@
+const request = new XMLHttpRequest();
 
 var formulario = document.getElementById('formulario');
-
 
 formulario.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -15,18 +15,27 @@ formulario.addEventListener('submit', function (e) {
     console.log(datos.get('description'))
     console.log(datos.get('location'))
 
+    const title = datos.get('title');
 
-const listEventos = async () => {
-    const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos", {
-        method: 'POST',
-        body: datos
+    const dto = formJson(e);
+    console.log(dto)
 
-    });
-    const eventos = await response.json();
+    request.open('POST', 'https://qvento-api.azurewebsites.net/api/qventos');
+    request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+    request.send(JSON.stringify(formJson(e)));
 
-    window.addEventListener("load", function () {
-        listEventos();
-    });
-}    
-
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            alert("Evento " + title + " creado!")
+            document.getElementById("formulario").reset();
+        }
+    }
 })
+
+function formJson(event) {
+    const qventoDto = {};
+    const myFormData = new FormData(event.target);
+    myFormData.forEach((value, key) => (qventoDto[key] = value));
+
+    return qventoDto;
+}
