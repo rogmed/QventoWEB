@@ -1,61 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Crear Evento</title>
-  <!--Bootstrap CSS-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Crear Evento</title>
+	<!--Bootstrap CSS-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;600&display=swap" rel="stylesheet">
-  <!--Custom CSS-->
-  <link rel="stylesheet" href="css/styleweb.css" />
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+	<!--Custom CSS-->
+	<link rel="stylesheet" href="css/styleweb.css">
 </head>
-
 <body>
-  
-  <h1>Crea un Evento</h1>
-  <div class="container my-3">
-    <form id="formulario">
-      <div class="mb-2">
-        <label for="exampleInputcreatedBy" class="form-label font-weight-bold">Usuario</label>
-        <input type="text" name="createdBy" placeholder="Ingresa el nombre del usuario" class="form-control my-3">
-        </div>
-      <div class="mb-2">
-      <label for="exampleInputTitle" class="form-label font-weight-bold">Nombre del Evento</label>
-      <input type="text" name="title" placeholder="Ingresa el nombre del evento" class="form-control my-3">
-      </div>
-      
-      <div class="mb-2">
-        <label for="exampleInputDateTime" class="form-label font-weight-bold">Fecha del Evento</label>
-        <input type="datetime" name="dateOfQvento" placeholder="Ingresa la fecha del evento"
-        class="form-control my-3">
-      </div>
-      <div class="mb-2">
-        <label for="exampleInputStatus" class="form-label font-weight-bold">Status del Evento</label>
-        <input type="text" name="status" placeholder="Ingresa el status del evento" class="form-control my-3">
-      </div>
-      <div class="mb-2">
-        <label for="exampleInputDescription" class="form-label font-weight-bold">Descripcion del Evento</label>
-        <input type="text" name="description" placeholder="Ingresa la descripcion del evento" class="form-control my-3">
-      </div>
-      <div class="mb-2">
-        <label for="exampleInputLocation" class="form-label font-weight-bold">Localizacion del Evento</label>
-        <input type="text" name="location" placeholder="Ingresa la localizacion del evento" class="form-control my-3">
-      </div>
-      
-      <button type="submit" class="btn btn-primary w-100">Crear Evento</button>
-    </form>
-    
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	<h1>Crea un Evento</h1>
+	<main>
+		<form action="" class="formulario" id="formulario">
+			<!-- Grupo: Usuario -->
+			<div class="formulario__grupo" id="grupo__createdBy">
+				<label for="createdBy" class="formulario__label">Usuario</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="createdBy" id="createdBy" placeholder=" ">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El usuario tiene que ser de 3 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+			</div>
+
+			<!-- Grupo: Titulo -->
+			<div class="formulario__grupo" id="grupo__title">
+				<label for="title" class="formulario__label">Titulo del Evento</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="title" id="title" placeholder=" ">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El Titulo tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+			</div>
+
+			<!-- Grupo: dateOfQvento -->
+			<div class="formulario__grupo" id="grupo__dateOfQvento">
+				<label for="dateOfQvento" class="formulario__label">Fecha del Evento</label>
+				<div class="formulario__grupo-input">
+					<input type="date" class="formulario__input" name="dateOfQvento" id="dateOfQvento" placeholder="">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">debe introducir una dateOfQvento.</p>
+			</div>
+
+			
+
+			<!-- Grupo: Status -->
+			<div class="formulario__grupo" id="grupo__status">
+				<label for="status" class="formulario__label">Status</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="status" id="status" placeholder=" ">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El estatus tiene que ser de 1 caracter.</p>
+			</div>
+
+
+			<!-- Grupo: Descripcion -->
+			<div class="formulario__grupo" id="grupo__description">
+				<label for="description" class="formulario__label">Descripcion</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="description" id="description" placeholder="descripcion del evento">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">La descripcion debe ser de al menos 5 caracteres</p>
+			</div>
+
+			<!-- Grupo: Localizacion -->
+			<div class="formulario__grupo" id="grupo__location">
+				<label for="location" class="formulario__label">Localizacion</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="location" id="location" placeholder="Introduce una direccion">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">debe introducir una direccion.</p>
+			</div>
+
+			<div class="formulario__mensaje" id="formulario__mensaje">
+				<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+			</div>
+
+			<div class="formulario__grupo formulario__grupo-btn-enviar">
+				<button type="submit" class="formulario__btn">Enviar</button>
+				<p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+			</div>
+		</form>
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
-    <script src="crearEvento.js"></script>
+	<script src="js/crearEvento.js"></script>
+	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 </body>
-
 </html>
