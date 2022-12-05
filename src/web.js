@@ -1,3 +1,4 @@
+// Obtiene token de la URL
 const queryString = window.location.search;
 const urlParameters = new URLSearchParams(queryString);
 const tempToken = urlParameters.get('temptoken');
