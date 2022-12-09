@@ -10,7 +10,6 @@ form.addEventListener('submit', callbackFunction);
 // Modal de bootstrap (alerta)
 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
 
-
 // Funcion principal
 function callbackFunction(e) {
 	// Muestra mensaje mientras espera respuesta
