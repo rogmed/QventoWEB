@@ -14,7 +14,7 @@ const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
 function callbackFunction(e) {
 	// Muestra mensaje mientras espera respuesta
 	$("#loginModal .modal-body").text('Esperando respuesta...');
-	loginModal.show();
+	$('#loginModal').modal('show');
 
 	// Esto evita que la consola dek navegador se limpie inmediatamente
 	event.preventDefault();
@@ -27,6 +27,7 @@ function callbackFunction(e) {
 	// Cuando la peticion cambie de estado se comprueba si está en 4 (DONE)
 	// y si ha recibido un 200 (OK) del servidor.
 	request.onreadystatechange = function () {
+		$('#loginModal').modal('show');
 
 		if (request.readyState == 4 && request.status == 400) {
 			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
