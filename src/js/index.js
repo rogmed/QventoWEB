@@ -33,6 +33,10 @@ function callbackFunction(e) {
 			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
 		}
 
+		if (request.readyState == 4 && request.status == 400) {
+			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
+		}
+
 		if (request.readyState == 4 && request.status == 401) {
 			$("#loginModal .modal-body").text('E-mail y/o password incorrectos.');
 		}
