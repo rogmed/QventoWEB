@@ -9,15 +9,14 @@ const listEventos = async () => {
     let tableBody = ``;
     eventos.forEach((evento, index) => {
 
+        var date = evento.DateOfQvento
+
         tableBody += `<tr>
-        <td class="centered">${evento.QventoId}</td>
-        <td class="centered">${evento.CreatedBy}</td>
-        <td class="centered">${evento.Title}</td>
-        <td class="centered">${evento.Description}</td>
-        <td class="centered">${evento.Location}</td>
-        <td class="centered">${evento.DateCreated}</td>
-        <td class="centered">${evento.DateOfQvento}</td>
-        <td class="centered">${evento.Status}</td>
+        <td align="left">${evento.CreatedBy}</td>
+        <td align='left'>${evento.Title}</td>
+        <td align="left">${evento.Description}</td>
+        <td align="left">${evento.Location}</td>
+        <td align="left">${evento.DateOfQvento}</td>
         </tr>`;
     });
 
