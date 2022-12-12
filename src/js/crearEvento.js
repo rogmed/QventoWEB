@@ -1,7 +1,6 @@
-// Obtiene token de la URL
-const queryString = window.location.search;
-const urlParameters = new URLSearchParams(queryString);
-const tempToken = urlParameters.get('temptoken');
+// Obtiene tempToken de las cookies
+const tokenData = JSON.parse(atob(document.cookie.split(".")[1]));
+const tempToken = tokenData.tempToken;
 
 const request = new XMLHttpRequest();
 

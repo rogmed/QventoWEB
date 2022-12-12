@@ -20,7 +20,7 @@ function callbackFunction(e) {
 	event.preventDefault();
 
 	// Abre la petición, elije formato JSON y envía el JSON en forma de string
-	request.open('POST', 'https://qvento-api.azurewebsites.net/api/user/login');
+	request.open('POST', 'https://qvento-api.azurewebsites.net/api/login');
 	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 	request.send(JSON.stringify(formJson(e)));
 
@@ -28,17 +28,25 @@ function callbackFunction(e) {
 	// y si ha recibido un 200 (OK) del servidor.
 	request.onreadystatechange = function () {
 
-		if (request.readyState == 4 && request.status == 401) {
-			$("#loginModal .modal-body").text('E-mail y/o password incorrectos.');
-		}
-
 		if (request.readyState == 4 && request.status == 400) {
 			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
 		}
 
+		if (request.readyState == 4 && request.status == 401) {
+			$("#loginModal .modal-body").text('E-mail y/o password incorrectos.');
+		}
+
+		if (request.status == 404) {
+			$("#loginModal .modal-body").text('404 Conexión fallida.');
+		}
+
 		if (request.readyState == 4 && request.status == 200) {
-			// Abre la página que el servidor indica
-			window.location.href = request.response;
+			loginModal.hide();
+			// Obtiene token con informacion del email y userId
+			document.cookie = request.response;
+
+			// Navega a pagina principal
+			window.location.href = "web.html";
 		}
 	}
 };
