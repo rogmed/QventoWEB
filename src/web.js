@@ -9,14 +9,17 @@ const listEventos = async () => {
     let tableBody = ``;
     eventos.forEach((evento, index) => {
 
-        var date = evento.DateOfQvento
+        var dateTime = evento.DateOfQvento.split("T");
+        var date = dateTime[0].split("-");
+        var displayDate = date[2] + "/" + date[1] + "/" + date[0]
 
         tableBody += `<tr>
-        <td align="left">${evento.CreatedBy}</td>
+        <td align="left">${evento.CreatedByNavigation.Name}</td>
         <td align='left'>${evento.Title}</td>
         <td align="left">${evento.Description}</td>
         <td align="left">${evento.Location}</td>
-        <td align="left">${evento.DateOfQvento}</td>
+        <td type="date" align="left">${displayDate}</td>
+        <td align="left">${dateTime[1]}</td>
         </tr>`;
     });
 
@@ -28,6 +31,5 @@ window.addEventListener("load", function () {
 });
 
 const crearEvento = () => {
-    console.log(tempToken);
     window.location.href = "crearEvento.html";
 }
