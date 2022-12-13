@@ -111,7 +111,20 @@ formulario.addEventListener('submit', function (e) {
 function formJson(event) {
     const qventoDto = {};
     const myFormData = new FormData(event.target);
-    myFormData.forEach((value, key) => (qventoDto[key] = value));
+    var dateOfQvento = "";
+    myFormData.forEach((value, key) => {
+        if (key == 'date') {
+            dateOfQvento += value;
+        }
 
+        if (key == 'time') {
+            dateOfQvento += "T" + value;
+            qventoDto["dateOfQvento"] = dateOfQvento
+        }
+
+        if (key != 'date' && key != 'time') {
+            qventoDto[key] = value
+        }
+    });
     return qventoDto;
 }
