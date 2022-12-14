@@ -34,12 +34,12 @@ function callbackFunction(e) {
 		$('#modal').modal('show');
 
 		if (request.status == 400) {
-			var result = JSON.parse(response);
+			$("#modal .modal-body").text('Error. Faltan campos obligatorios.');
 			$("#modal .modal-body").text(result);
 		}
 
 		if (request.status == 404) {
-			$("#modal .modal-body").text('404 Conexion fallida.');
+			$("#modal .modal-body").text('Conexion fallida.');
 		}
 
 		if (request.status == 409) {
@@ -56,6 +56,7 @@ function callbackFunction(e) {
 				+ " email: " + dto["email"]);
 
 			$("modal .modal.footer").text('Click para volver');
+			form.reset();
 			//window.location.href = "web.html";
 		}
 	}
