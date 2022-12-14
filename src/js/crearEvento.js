@@ -9,12 +9,9 @@ var formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
 
 const expresiones = {
-    createdBy: /^[a-zA-Z0-9\_\-]{3}$/, // Letras, numeros, guion y guion_bajo
-    title: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-    dateOfQvento: /^[a-zA-Z0-9\_\-]{10}$/, // Letras, numeros, guion y guion_bajo
-    status: /^[a-zA-Z0-9\s]{1}$/,
-    description: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
-    location: /^[a-zA-Z0-9\s]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    title: /^[a-zA-Z0-9À-ÿ\s]{3,50}$/, // Alfanumérico (3 a 50 caracteres)
+    description: /^.{0,255}$/,
+    location: /^.{0,255}$/
 }
 
 const campos = {
@@ -28,17 +25,11 @@ const campos = {
 
 const validarFormulario = (e) => {
     switch (e.target.name) {
-        case "createdBy":
-            validarCampo(expresiones.createdBy, e.target, 'createdBy');
-            break;
         case "title":
             validarCampo(expresiones.title, e.target, 'title');
             break;
         case "dateOfQvento":
             validarCampo(expresiones.dateOfQvento, e.target, 'dateOfQvento');
-            break;
-        case "status":
-            validarCampo(expresiones.status, e.target, 'status');
             break;
         case "description":
             validarCampo(expresiones.description, e.target, 'description');
@@ -101,6 +92,10 @@ formulario.addEventListener('submit', function (e) {
     request.send(JSON.stringify(formJson(e)));
 
     request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 400) {
+            alert("Error. Faltan campos obligatorios.")
+        }
+
         if (request.readyState == 4 && request.status == 200) {
             alert("Evento " + title + " creado!")
             document.getElementById("formulario").reset();
