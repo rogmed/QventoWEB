@@ -1,7 +1,9 @@
+var email;
+
 const registrarUsuario = () => {
     var name = document.getElementById("name").value;
     var lastName = document.getElementById("lastname").value;
-    var email = document.getElementById("email").value;
+    email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirm-password").value;
     var phone = document.getElementById("phone").value;
@@ -37,54 +39,48 @@ const modal = new bootstrap.Modal(document.getElementById('modal'));
 
 // Funcion principal
 function callbackFunction(e) {
-	// // Muestra mensaje mientras espera respuesta
-	// $("#modal .modal-body").text('Esperando respuesta...');
-	// $('#modal').modal('show');
+	// Muestra mensaje mientras espera respuesta
+	$("#modal .modal-body").text('Esperando respuesta...');
+	$('#modal').modal('show');
 
 	// Esto evita que la consola dek navegador se limpie inmediatamente
 	e.preventDefault();
-
-	var json = formJson(e);
-	console.log(json);
-
-	var dto = JSON.stringify(json);
-	console.log(dto);
 
 	// Abre la petici�n, elije formato JSON y env�a el JSON en forma de string
 	request.open('POST', 'https://qvento-api.azurewebsites.net/api/user');
 	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 	request.send(JSON.stringify(formJson(e)));
 
-	// // Cuando la peticion cambie de estado se comprueba si est� en 4 (DONE)
-	// // y si ha recibido un 200 (OK) del servidor.
-	// request.onreadystatechange = function () {
-	// 	$('#modal').modal('show');
+	// Cuando la peticion cambie de estado se comprueba si est� en 4 (DONE)
+	// y si ha recibido un 200 (OK) del servidor.
+	request.onreadystatechange = function () {
+		$('#modal').modal('show');
 
-	// 	if (request.readyState == 4 && request.status == 400) {
-	// 		$("#modal .modal-body").text('Se necesita e-mail y password.');
-	// 	}
+		if (request.readyState == 4 && request.status == 400) {
+			$("#modal .modal-body").text('Http 400');
+		}
 
-	// 	if (request.readyState == 4 && request.status == 400) {
-	// 		$("#modal .modal-body").text('Se necesita e-mail y password.');
-	// 	}
+		if (request.status == 404) {
+			$("#modal .modal-body").text('404 Conexion fallida.');
+		}
 
-	// 	if (request.readyState == 4 && request.status == 401) {
-	// 		$("#modal .modal-body").text('E-mail y/o password incorrectos.');
-	// 	}
+		if (request.status == 409) {
+			$("#modal .modal-body").text('El e-mail ' + email + " ya está en"
+			+ " uso. Por favor, utilice otro distinto.");
+		}
 
-	// 	if (request.status == 404) {
-	// 		$("#modal .modal-body").text('404 Conexi�n fallida.');
-	// 	}
+		if (request.readyState == 4 && request.status == 422) {
+			$("#modal .modal-body").text('Http 422');
+		}
 
-	// 	if (request.readyState == 4 && request.status == 200) {
-	// 		modal.hide();
-	// 		// Obtiene token con informacion del email y userId
-	// 		document.cookie = request.response;
+		if (request.readyState == 4 && request.status == 200) {
+			$("#modal .modal-body").text("Usuario registrado con éxito con "
+			+ " email: " + email);
 
-	// 		// Navega a pagina principal
-	// 		window.location.href = "web.html";
-	// 	}
-	// }
+			$("modal .modal.footer").text('Click para volver');
+			//window.location.href = "web.html";
+		}
+	}
 };
 
 // Coge todos los campos de <form> y crea un JSON con ellos
