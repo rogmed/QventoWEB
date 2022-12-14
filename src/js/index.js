@@ -17,14 +17,14 @@ function callbackFunction(e) {
 	$('#loginModal').modal('show');
 
 	// Esto evita que la consola dek navegador se limpie inmediatamente
-	event.preventDefault();
+	e.preventDefault();
 
-	// Abre la petición, elije formato JSON y envía el JSON en forma de string
+	// Abre la peticiï¿½n, elije formato JSON y envï¿½a el JSON en forma de string
 	request.open('POST', 'https://qvento-api.azurewebsites.net/api/login');
 	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
 	request.send(JSON.stringify(formJson(e)));
 
-	// Cuando la peticion cambie de estado se comprueba si está en 4 (DONE)
+	// Cuando la peticion cambie de estado se comprueba si estï¿½ en 4 (DONE)
 	// y si ha recibido un 200 (OK) del servidor.
 	request.onreadystatechange = function () {
 		$('#loginModal').modal('show');
@@ -42,7 +42,7 @@ function callbackFunction(e) {
 		}
 
 		if (request.status == 404) {
-			$("#loginModal .modal-body").text('404 Conexión fallida.');
+			$("#loginModal .modal-body").text('404 Conexiï¿½n fallida.');
 		}
 
 		if (request.readyState == 4 && request.status == 200) {
