@@ -7,7 +7,6 @@ const registrarUsuario = () => {
     var phone = document.getElementById("phone").value;
     var address = document.getElementById("address").value;
 
-
     if (name === '' || lastName === '' || email === '' || password === '') {
         alert("Los siguientes campos son obligatorios:"
             + "\n - Nombre"
@@ -33,8 +32,8 @@ const form = document.getElementById('register');
 // Listener para actuar cuando se haga click en 'submit'
 form.addEventListener('submit', callbackFunction);
 
-// // Modal de bootstrap (alerta)
-// const modal = new bootstrap.Modal(document.getElementById('modal'));
+// Modal de bootstrap (alerta)
+const modal = new bootstrap.Modal(document.getElementById('modal'));
 
 // Funcion principal
 function callbackFunction(e) {
@@ -45,11 +44,16 @@ function callbackFunction(e) {
 	// Esto evita que la consola dek navegador se limpie inmediatamente
 	e.preventDefault();
 
-	// // Abre la petici�n, elije formato JSON y env�a el JSON en forma de string
-	// request.open('POST', 'https://qvento-api.azurewebsites.net/api/login');
-	// request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-	// request.send(JSON.stringify(formJson(e)));
-	console.log("CLICK");
+	var json = formJson(e);
+	console.log(json);
+
+	var dto = JSON.stringify(json);
+	console.log(dto);
+
+	// Abre la petici�n, elije formato JSON y env�a el JSON en forma de string
+	request.open('POST', 'https://qvento-api.azurewebsites.net/api/user');
+	request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+	request.send(JSON.stringify(formJson(e)));
 
 	// // Cuando la peticion cambie de estado se comprueba si est� en 4 (DONE)
 	// // y si ha recibido un 200 (OK) del servidor.
@@ -87,12 +91,16 @@ function callbackFunction(e) {
 function formJson(event) {
 	const dto = {};
 	const myFormData = new FormData(event.target);
-	myFormData.forEach((value, key) => (dto[key] = value));
+	myFormData.forEach((value, key) => {
+		if(key != "confirmPassword"){
+			dto[key] = value;
+		}
+	});
 
 	return dto;
 }
 
-// // Close the modal
-// function closeDialog() {
-// 	modal.hide();
-// }
+// Close the modal
+function closeDialog() {
+	modal.hide();
+}
