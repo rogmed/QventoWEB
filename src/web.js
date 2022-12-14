@@ -12,6 +12,7 @@ const listEventos = async () => {
         var dateTime = evento.DateOfQvento.split("T");
         var date = dateTime[0].split("-");
         var displayDate = date[2] + "/" + date[1] + "/" + date[0]
+        var displayTime = dateTime[1].slice(0, 5);
 
         tableBody += `<tr>
         <td align="left">${evento.CreatedByNavigation.Name}</td>
@@ -19,7 +20,7 @@ const listEventos = async () => {
         <td align="left">${evento.Description}</td>
         <td align="left">${evento.Location}</td>
         <td type="date" align="left">${displayDate}</td>
-        <td align="left">${dateTime[1]}</td>
+        <td type="time" align="left">${displayTime}</td>
         </tr>`;
     });
 
