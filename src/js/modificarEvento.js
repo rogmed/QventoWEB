@@ -1,5 +1,5 @@
 //Id del Evento
-var qventoId = 110;
+const qventoId = 110;
 
 // Modal de bootstrap (alerta)
 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -11,7 +11,7 @@ const tempToken = urlParameters.get('temptoken');
 
 const request = new XMLHttpRequest();
 
-var formulario = document.getElementById('formulario');
+const formulario = document.getElementById('formulario');
 
 const inputs = document.querySelectorAll('#formulario input');
 
@@ -86,7 +86,7 @@ formulario.addEventListener('submit', function (e) {
     $("#loginModal .modal-body").text('Esperando respuesta...');
     loginModal.show();
 
-    var datos = new FormData(formulario);
+    const datos = new FormData(formulario);
 
     const title = datos.get('title');
 
