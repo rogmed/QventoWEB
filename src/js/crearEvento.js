@@ -4,7 +4,7 @@ const tempToken = tokenData.tempToken;
 
 const request = new XMLHttpRequest();
 
-var formulario = document.getElementById('formulario');
+const formulario = document.getElementById('formulario');
 
 const inputs = document.querySelectorAll('#formulario input');
 
@@ -83,7 +83,7 @@ formulario.addEventListener('submit', function (e) {
         document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
     }*/
 
-    var datos = new FormData(formulario);
+    const datos = new FormData(formulario);
 
     const title = datos.get('title');
 
@@ -106,7 +106,7 @@ formulario.addEventListener('submit', function (e) {
 function formJson(event) {
     const qventoDto = {};
     const myFormData = new FormData(event.target);
-    var dateOfQvento = "";
+    let dateOfQvento = "";
     myFormData.forEach((value, key) => {
         if (key == 'date') {
             dateOfQvento += value;

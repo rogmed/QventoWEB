@@ -9,10 +9,10 @@ const listEventos = async () => {
     let tableBody = ``;
     eventos.forEach((evento, index) => {
 
-        var dateTime = evento.DateOfQvento.split("T");
-        var date = dateTime[0].split("-");
-        var displayDate = date[2] + "/" + date[1] + "/" + date[0]
-        var displayTime = dateTime[1].slice(0, 5);
+        const dateTime = evento.DateOfQvento.split("T");
+        const date = dateTime[0].split("-");
+        const displayDate = date[2] + "/" + date[1] + "/" + date[0]
+        const displayTime = dateTime[1].slice(0, 5);
 
         tableBody += `<tr>
         <td align="left">${evento.CreatedByNavigation.Name}</td>
