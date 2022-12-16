@@ -68,7 +68,7 @@ function callbackFunction(e) {
 			document.cookie = request.response;
 
 			// Navega a pagina principal
-			window.location.href = "web.html";
+			window.location.href = "main.html";
 		}
 	}
 };
