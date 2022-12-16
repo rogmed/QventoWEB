@@ -36,30 +36,32 @@ function sendRequest(e) {
     // Cuando la peticion tenga un código de respuesta, muestra otro mensaje
     request.onreadystatechange = function () {
 
-        waitModal.hide();
+        if (request.readyState === 4) {
+            waitModal.hide();
 
-        if (request.status === 404) {
-            $("#warningModal .modal-body").text('Conexion fallida.');
-            warningModal.show();
-        }
+            if (request.status === 404) {
+                $("#warningModal .modal-body").text('Conexion fallida.');
+                warningModal.show();
+            }
 
-        if (request.status === 409) {
-            $("#warningModal .modal-body").text(dto["email"] +" ya está en uso."
-                + "\nPor favor, utilice un e-mail distinto.");
-            warningModal.show();
-        }
+            if (request.status === 409) {
+                $("#warningModal .modal-body").text(dto["email"] + " ya está en uso."
+                    + "\nPor favor, utilice un e-mail distinto.");
+                warningModal.show();
+            }
 
-        if (request.status === 422) {
-            $("#warningModal .modal-body").text('Petición inválida (422)');
-            warningModal.show();
-        }
+            if (request.status === 422) {
+                $("#warningModal .modal-body").text('Petición inválida (422)');
+                warningModal.show();
+            }
 
-        if (request.status === 200) {
-            $("#successModal .modal-body").text("Usuario registrado con éxito con "
-                + " email:\n" + dto["email"]);
-            successModal.show();
+            if (request.status === 200) {
+                $("#successModal .modal-body").text("Usuario registrado con éxito con "
+                    + " email:\n" + dto["email"]);
+                successModal.show();
 
-            form.reset();
+                form.reset();
+            }
         }
     }
 };

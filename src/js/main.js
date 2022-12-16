@@ -1,12 +1,17 @@
 import { Cookie } from './cookie.js';
 const cookie = new Cookie();
 
-// Obtiene tempToken de las cookies
-const tokenData = JSON.parse(atob(document.cookie.split(".")[1]));
-const tempToken = tokenData.tempToken;
+// Obtiene datos de las cookies
+const token = cookie.readCookie("token");
+const tempToken = token.tempToken;
+const email = token.email;
 
 let events;
 
+// Nombre de usuario en navbar
+const ASDASDA;
+
+// Pide datos de Eventos al servidor y llena la tabla
 window.addEventListener("load", function () {
     listEventos();
 });
