@@ -1,8 +1,25 @@
+// Botón de Iniciar Sesion
+const button = document.querySelector('#login-button');
+button.disabled = true;
+
+// Formulario e-mail y password
+const form = document.getElementById('login')
+const email = document.getElementById('InputEmail')
+const password = document.getElementById('InputPassword')
+
+form.addEventListener("change", updateButton);
+
+// Desactiva botón de login si e-mail o password están vacíos
+function updateButton(e) {
+	if (email.value == "" || password.value == "") {
+		button.disabled = true;
+	} else {
+		button.disabled = false;
+	}
+}
+
 // Inicia nueva peticion
 const request = new XMLHttpRequest();
-
-// Selecciona el <form> con id 'login' para extraer datos
-const form = document.getElementById('login')
 
 // Listener para actuar cuando se haga click en 'submit'
 form.addEventListener('submit', callbackFunction);
@@ -51,7 +68,7 @@ function callbackFunction(e) {
 			document.cookie = request.response;
 
 			// Navega a pagina principal
-			window.location.href = "web.html";
+			window.location.href = "main.html";
 		}
 	}
 };
@@ -69,3 +86,7 @@ function formJson(event) {
 function closeDialog() {
 	loginModal.hide();
 }
+
+// Boton de registro
+const registerButton = document.getElementById("register-button");
+registerButton.disabled = true;
