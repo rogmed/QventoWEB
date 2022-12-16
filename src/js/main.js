@@ -1,13 +1,39 @@
 // Obtiene tempToken de las cookies
 const tokenData = JSON.parse(atob(document.cookie.split(".")[1]));
 const tempToken = tokenData.tempToken;
+let events;
+
+window.addEventListener("load", function () {
+    listEventos();
+});
 
 const listEventos = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/relevant/" + tempToken);
-    const eventos = await response.json();
+    result = await response.json();
 
+    events = toList(result);
+
+    if (events.length === 0) {
+        alert("No tienes eventos. Haz click en Crear Evento para empezar.")
+    } else {
+        fillTable(events);
+    }
+};
+
+// Extraer eventos a lista
+function toList(result) {
+    let list = [];
+    result.forEach((evento, index) => {
+        list[index] = evento;
+    });
+
+    return list;
+}
+
+// Llenar tabla html
+function fillTable(events) {
     let tableBody = ``;
-    eventos.forEach((evento, index) => {
+    events.forEach((evento, index) => {
 
         const dateTime = evento.DateOfQvento.split("T");
         const date = dateTime[0].split("-");
@@ -25,12 +51,4 @@ const listEventos = async () => {
     });
 
     document.getElementById("tableBody_Eventos").innerHTML = tableBody;
-};
-
-window.addEventListener("load", function () {
-    listEventos();
-});
-
-function crearEvento() {
-    window.location.href = "create-event.html";
 }
