@@ -1,6 +1,10 @@
+import { Cookie } from './cookie.js';
+const cookie = new Cookie();
+
 // Obtiene tempToken de las cookies
 const tokenData = JSON.parse(atob(document.cookie.split(".")[1]));
 const tempToken = tokenData.tempToken;
+
 let events;
 
 window.addEventListener("load", function () {
@@ -9,15 +13,18 @@ window.addEventListener("load", function () {
 
 const listEventos = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/relevant/" + tempToken);
-    result = await response.json();
+    const result = await response.json();
 
     events = toList(result);
 
     if (events.length === 0) {
-        alert("No tienes eventos. Haz click en Crear Evento para empezar.")
+        const message = "No tienes eventos. Haz click en Crear Evento para empezar.";
+        document.getElementBy("table-caption").innerHTML = message;
     } else {
         fillTable(events);
     }
+
+    addListenerToClass("qvento-row");
 };
 
 // Extraer eventos a lista
@@ -40,15 +47,39 @@ function fillTable(events) {
         const displayDate = date[2] + "/" + date[1] + "/" + date[0]
         const displayTime = dateTime[1].slice(0, 5);
 
-        tableBody += `<tr>
-        <td align="left">${evento.CreatedByNavigation.Name}</td>
-        <td align='left'>${evento.Title}</td>
-        <td align="left">${evento.Description}</td>
-        <td align="left">${evento.Location}</td>
-        <td type="date" align="left">${displayDate}</td>
-        <td type="time" align="left">${displayTime}</td>
+        tableBody += `<tr class="qvento-row" data-qventoid="${evento.QventoId}">
+        <td>${evento.CreatedByNavigation.Name}</td>
+        <td>${evento.Title}</td>
+        <td>${evento.Location}</td>
+        <td type="date">${displayDate}</td>
+        <td type="time">${displayTime}</td>
         </tr>`;
     });
 
-    document.getElementById("tableBody_Eventos").innerHTML = tableBody;
+    document.getElementById("my-qventos").innerHTML = tableBody;
+}
+
+
+// Al hacer click sobre un Evento guarda su ID en una cookie y navega a la
+// página para ver detalles / modificarlo
+function qventoDetails(qventoId) {
+    cookie.createCookie("qventoId", qventoId, 1);
+    window.location.href = "update-event.html";
+}
+
+// Ordena por fechas
+function datesSorter(a, b) {
+    if (new Date(a) < new Date(b)) return 1;
+    if (new Date(a) > new Date(b)) return -1;
+    return 0;
+}
+
+// Agrega un listener para todos los elementos de una clase
+function addListenerToClass(classname, functionname) {
+    var elements = document.getElementsByClassName(classname);
+
+    for (var i = 0; i < elements.length; i++) {
+        const qventoId = elements[i].getAttribute("data-qventoid");
+        elements[i].addEventListener("click", function () { qventoDetails(qventoId) });
+    }
 }
