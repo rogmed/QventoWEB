@@ -31,6 +31,6 @@ window.addEventListener("load", function () {
     listEventos();
 });
 
-const crearEvento = () => {
+function crearEvento() {
     window.location.href = "crearEvento.html";
 }
