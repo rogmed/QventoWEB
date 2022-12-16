@@ -1,76 +1,83 @@
-let email;
-let message;
-
 // Inicia nueva peticion
 const request = new XMLHttpRequest();
 
 // Selecciona el <form> con id 'login' para extraer datos
 const form = document.getElementById('register');
 
-// Modal de bootstrap (alerta)
-const modal = new bootstrap.Modal(document.getElementById('modal'));
+// Modales de bootstrap (mensajes pop up)
+let waitModal = new bootstrap.Modal(document.getElementById('waitModal'));
+let warningModal = new bootstrap.Modal(document.getElementById('warningModal'));
+let successModal = new bootstrap.Modal(document.getElementById('successModal'));
 
 // Listener para actuar cuando se haga click en 'submit'
 form.addEventListener('submit', callbackFunction);
 
-// Funcion principal
+// Boton Registrarse primero comprueba si el formulario es correcto para enviar
+// i.e. si tiene los campos obligatorios y el password se ha confirmado
+// luego envía le petición y da un mensaje dependiendo de la respuesta del
+// servidor
 function callbackFunction(e) {
-    // Esto evita que la consola dek navegador se limpie inmediatamente
-    e.preventDefault();
+    if (checkForm(e)) {
+        sendRequest(e);
+    }
+}
 
-    // Muestra mensaje mientras espera respuesta
-    $("#modal .modal-body").text('Esperando respuesta...');
-    $('#modal').modal('show');
+// Llamada al servidor
+function sendRequest(e) {
+    // Muestra mensaje mientras comienza peticion y procesa respuesta
+    $("#waitModal .modal-body").text('Esperando respuesta...');
+    waitModal.show();
 
-    // Abre la petici�n, elije formato JSON y env�a el JSON en forma de string
     request.open('POST', 'https://qvento-api.azurewebsites.net/api/user');
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    response = request.send(JSON.stringify(formJson(e)));
+    const dto = formJson(e);
+    response = request.send(JSON.stringify(dto));
 
-    // Cuando la peticion cambie de estado se comprueba si est� en 4 (DONE)
-    // y si ha recibido un 200 (OK) del servidor.
+    // Cuando la peticion tenga un código de respuesta, muestra otro mensaje
     request.onreadystatechange = function () {
-        $('#modal').modal('show');
 
-        if (request.status == 400) {
-            $("#modal .modal-body").text('Error. Faltan campos obligatorios.');
-            $("#modal .modal-body").text(result);
+        waitModal.hide();
+
+        if (request.status === 404) {
+            $("#warningModal .modal-body").text('Conexion fallida.');
+            warningModal.show();
         }
 
-        if (request.status == 404) {
-            $("#modal .modal-body").text('Conexion fallida.');
+        if (request.status === 409) {
+            $("#warningModal .modal-body").text(dto["email"] +" ya está en uso."
+                + "\nPor favor, utilice un e-mail distinto.");
+            warningModal.show();
         }
 
-        if (request.status == 409) {
-            $("#modal .modal-body").text(dto["email"] + " ya está en uso. "
-                + "Por favor, utilice un e-mail distinto.");
+        if (request.status === 422) {
+            $("#warningModal .modal-body").text('Petición inválida (422)');
+            warningModal.show();
         }
 
-        if (request.readyState == 4 && request.status == 422) {
-            $("#modal .modal-body").text('Http 422');
-        }
+        if (request.status === 200) {
+            $("#successModal .modal-body").text("Usuario registrado con éxito con "
+                + " email:\n" + dto["email"]);
+            successModal.show();
 
-        if (request.readyState == 4 && request.status == 200) {
-            $("#modal .modal-body").text("Usuario registrado con éxito con "
-                + " email: " + dto["email"]);
-
-            $("modal .modal.footer").text('Click para volver');
             form.reset();
-            //window.location.href = "web.html";
         }
     }
 };
 
-// Comprueba si el formulario tiene los campos obligatorios
-function checkForm() {
+// Comprueba si el formulario tiene los campos obligatorios y construye el
+// mensaje relevante para devolverlo en un modal
+function checkForm(e) {
+    e.preventDefault();
     const name = document.getElementById("name").value;
     const lastName = document.getElementById("last-name").value;
-    email = document.getElementById("email").value;
+    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm-password").value;
 
+    let message;
+
     if (name === '' || lastName === '' || email === '' || password === '') {
-        let message = "Por favor, rellene: ";
+        message = "Por favor, rellene: ";
         if (name === "") {
             message += "\n - Nombre";
         }
@@ -83,18 +90,22 @@ function checkForm() {
         if (password === "") {
             message += "\n - Contraseña";
         }
-        $("#modal .modal-body").text(message);
-        $('#modal').modal('show');
+        closeModals();
+        $("#warningModal .modal-body").text(message);
+        $('#warningModal').modal('show');
+        return false;
 
     } else if (password != confirmPassword) {
-        $("#modal .modal-body").text(
+        closeModals();
+        $("#warningModal .modal-body").text(
             "La confirmación de la contraseña debe ser igual a la contraseña.");
-        $('#modal').modal('show');
+        $('#warningModal').modal('show');
+
+        return false;
+
     } else {
         return true;
     }
-
-    return false;
 }
 
 // Coge todos los campos de <form> y crea un JSON con ellos
@@ -110,7 +121,9 @@ function formJson(event) {
     return dto;
 }
 
-// Close the modal
-function closeDialog() {
-    modal.hide();
+// Cierra los modales que pueda haber abiertos
+function closeModals() {
+    waitModal.hide();
+    warningModal.hide();
+    successModal.hide();
 }
