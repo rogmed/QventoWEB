@@ -33,7 +33,7 @@ function callbackFunction(e) {
 	$("#loginModal .modal-body").text('Esperando respuesta...');
 	$('#loginModal').modal('show');
 
-	// Esto evita que la consola dek navegador se limpie inmediatamente
+	// Esto evita que la consola del navegador se limpie inmediatamente
 	e.preventDefault();
 
 	// Abre la petici�n, elije formato JSON y env�a el JSON en forma de string
@@ -46,23 +46,24 @@ function callbackFunction(e) {
 	request.onreadystatechange = function () {
 		$('#loginModal').modal('show');
 
-		if (request.readyState == 4 && request.status == 400) {
+		if (request.status == 400) {
 			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
-		}
-
-		if (request.readyState == 4 && request.status == 400) {
-			$("#loginModal .modal-body").text('Se necesita e-mail y password.');
-		}
-
-		if (request.readyState == 4 && request.status == 401) {
-			$("#loginModal .modal-body").text('E-mail y/o password incorrectos.');
 		}
 
 		if (request.status == 404) {
 			$("#loginModal .modal-body").text('404 Conexi�n fallida.');
 		}
 
-		if (request.readyState == 4 && request.status == 200) {
+		if (request.status == 401) {
+			$("#loginModal .modal-body").text('Contraseña incorrecta.');
+		}
+
+		if (request.status == 422) {
+			$("#loginModal .modal-body").text('No existe usuario con el email '
+				+ email.value);
+		}
+
+		if (request.status == 200) {
 			loginModal.hide();
 			// Obtiene token con informacion del email y userId
 			document.cookie = request.response;
@@ -86,7 +87,3 @@ function formJson(event) {
 function closeDialog() {
 	loginModal.hide();
 }
-
-// Boton de registro
-const registerButton = document.getElementById("register-button");
-registerButton.disabled = true;

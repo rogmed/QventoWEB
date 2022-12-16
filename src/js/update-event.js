@@ -1,5 +1,8 @@
+import { Cookie } from './cookie.js';
+const cookie = new Cookie();
+
 //Id del Evento
-const qventoId = 110;
+const qventoId = cookie.readCookie("qventoId");
 
 // Modal de bootstrap (alerta)
 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
@@ -128,8 +131,6 @@ function formJson(event) {
 const listEventos = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/" + qventoId);
     const qvento = await response.json();
-
-    console.log(qvento);
 
     const { elements } = document.querySelector('form');
 

@@ -181,3 +181,11 @@ main {
         width: 100%;
     }
 }
+
+#qvento-row:hover {
+    cursor: pointer;
+}
+
+#table-caption {
+    color: black;
+}
