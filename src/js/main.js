@@ -32,5 +32,5 @@ window.addEventListener("load", function () {
 });
 
 function crearEvento() {
-    window.location.href = "crearEvento.html";
+    window.location.href = "create-event.html";
 }
