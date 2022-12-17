@@ -1,6 +1,14 @@
-// Obtiene tempToken de las cookies
-const tokenData = JSON.parse(atob(document.cookie.split(".")[1]));
-const tempToken = tokenData.tempToken;
+import { Cookie } from './cookie.js';
+const cookie = new Cookie();
+
+// Obtiene datos de las cookies
+const token = JSON.parse(cookie.readCookie("token"));
+
+// Cargar navbar con email de usuario
+$.get("nav.html", async function (data) {
+    await $("#nav-placeholder").replaceWith(data);
+    document.getElementById("user-tag").innerHTML = token.email;
+});
 
 const request = new XMLHttpRequest();
 
@@ -67,27 +75,11 @@ inputs.forEach((input) => {
 formulario.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    /*const terminos = document.getElementById('terminos');
-    if(campos.createdBy && campos.title && campos.dateOfQvento && campos.status && campos.description && campos.location && terminos.checked ){
-        formulario.reset();
-
-        document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
-        setTimeout(() => {
-            document.getElementById('formulario__mensaje-exito').classList.remove('formulario__mensaje-exito-activo');
-        }, 5000);
-
-        document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
-            icono.classList.remove('formulario__grupo-correcto');
-        });
-    } else {
-        document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
-    }*/
-
     const datos = new FormData(formulario);
 
     const title = datos.get('title');
 
-    request.open('POST', 'https://qvento-api.azurewebsites.net/api/qventos/' + tempToken);
+    request.open('POST', 'https://qvento-api.azurewebsites.net/api/qventos/' + token.tempToken);
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
     request.send(JSON.stringify(formJson(e)));
 

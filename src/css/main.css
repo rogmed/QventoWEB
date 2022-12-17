@@ -182,7 +182,7 @@ main {
     }
 }
 
-#qvento-row:hover {
+.qvento-row:hover {
     cursor: pointer;
 }
 

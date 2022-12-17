@@ -6,47 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Qvento</title>
 
-    <!--Bootstrap-->
+    <!--jQuery JS-->
+    <script src="//code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <!--Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    
+
+    <!--Custom JS-->
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/cookie.js"></script>
+
     <!--Custom CSS-->
     <link rel="stylesheet" href="css/main.css" />
 </head>
 
 <body class="bg-dark">
     <!--BARRA DE NAVEGACION-->
-
-    <!--OTRA NAVBAR-->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Qvento</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarsExample03">
-                <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="create-event.html">Crear Evento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">|</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Acerca de Qvento</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="https://github.com/rogmed/QventoWEB" target="_blank">Repositorio Web</a></li>
-                            <li><a class="dropdown-item" href="https://github.com/rogmed/QventoAPI" target="_blank">Repositorio API</a></li>
-                            <li><a class="dropdown-item" href="https://www.linkedin.com/in/rogeliomdn/" target="_blank">Autor</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form role="search">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                </form>
-            </div>
-        </div>
-    </nav>
+    <div id="nav-placeholder">
+    </div>
 
     <div class="container my-3">
         <div class="row">
@@ -102,13 +82,6 @@
             </div>
         </div>
     </div>
-
-    <!--Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-    <!--Custom JS-->
-    <script type="module" src="js/main.js"></script>
-    <script type="module" src="js/cookie.js"></script>
 </body>
 
 </html>
