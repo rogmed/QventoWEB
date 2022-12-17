@@ -1,14 +1,13 @@
 import { Cookie } from './cookie.js';
-const cookie = new Cookie();
+import { Navbar } from './navbar.js';
 
 // Obtiene datos de las cookies
+const cookie = new Cookie();
 const token = JSON.parse(cookie.readCookie("token"));
 
 // Cargar navbar con email de usuario
-$.get("nav.html", async function (data) {
-    await $("#nav-placeholder").replaceWith(data);
-    document.getElementById("user-tag").innerHTML = token.email;
-});
+const navbar = new Navbar();
+navbar.load(token);
 
 const request = new XMLHttpRequest();
 
