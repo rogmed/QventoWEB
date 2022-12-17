@@ -29,8 +29,6 @@ formulario.addEventListener('submit', function (e) {
 
     const datos = new FormData(formulario);
 
-    const title = datos.get('title');
-
     request.open('PUT', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     request.send(JSON.stringify(formJson(e)));
@@ -55,7 +53,7 @@ function formJson(event) {
     const myFormData = new FormData(event.target);
     let dateOfQvento = "";
     myFormData.forEach((value, key) => {
-        if (key == 'Date') {
+        if (key == 'DateOfQvento') {
             dateOfQvento += value;
         }
 
@@ -97,8 +95,3 @@ const listEventos = async () => {
 window.addEventListener("load", function () {
     listEventos();
 });
-
-// Close the modal
-function closeDialog() {
-    loginModal.hide();
-}
