@@ -25,7 +25,7 @@ function callbackFunction(e) {
 // Llamada al servidor
 function sendRequest(e) {
     // Muestra mensaje mientras comienza peticion y procesa respuesta
-    $("#waitModal .modal-body").text('Esperando respuesta...');
+    $("#waitModal .modal-body").text('Esperando respuesta del servidor...');
     waitModal.show();
 
     request.open('POST', 'https://qvento-api.azurewebsites.net/api/user');

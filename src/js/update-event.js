@@ -1,6 +1,15 @@
 import { Cookie } from './cookie.js';
 const cookie = new Cookie();
 
+// Obtiene datos de las cookies
+const token = JSON.parse(cookie.readCookie("token"));
+
+// Cargar navbar con email de usuario
+$.get("nav.html", async function (data) {
+    await $("#nav-placeholder").replaceWith(data);
+    document.getElementById("user-tag").innerHTML = token.email;
+});
+
 //Id del Evento
 const qventoId = cookie.readCookie("qventoId");
 

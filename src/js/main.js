@@ -2,14 +2,16 @@ import { Cookie } from './cookie.js';
 const cookie = new Cookie();
 
 // Obtiene datos de las cookies
-const token = cookie.readCookie("token");
-const tempToken = token.tempToken;
-const email = token.email;
+const token = JSON.parse(cookie.readCookie("token"));
 
+// Cargar navbar con email de usuario
+$.get("nav.html", async function (data) {
+    await $("#nav-placeholder").replaceWith(data);
+    document.getElementById("user-tag").innerHTML = token.email;
+});
+
+// Lista de eventos
 let events;
-
-// Nombre de usuario en navbar
-const ASDASDA;
 
 // Pide datos de Eventos al servidor y llena la tabla
 window.addEventListener("load", function () {
@@ -17,14 +19,14 @@ window.addEventListener("load", function () {
 });
 
 const listEventos = async () => {
-    const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/relevant/" + tempToken);
+    const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/relevant/" + token.tempToken);
     const result = await response.json();
 
     events = toList(result);
 
     if (events.length === 0) {
         const message = "No tienes eventos. Haz click en Crear Evento para empezar.";
-        document.getElementBy("table-caption").innerHTML = message;
+        document.getElementById("table-caption").innerHTML = message;
     } else {
         fillTable(events);
     }
@@ -80,7 +82,7 @@ function datesSorter(a, b) {
 }
 
 // Agrega un listener para todos los elementos de una clase
-function addListenerToClass(classname, functionname) {
+function addListenerToClass(classname) {
     var elements = document.getElementsByClassName(classname);
 
     for (var i = 0; i < elements.length; i++) {
