@@ -17,7 +17,7 @@ navbar.load(token);
 const qventoId = cookie.readCookie("qventoId");
 
 // Modal de bootstrap (alerta)
-const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+const modal = new bootstrap.Modal(document.getElementById('Modal'));
 
 // Comienza peticion
 const request = new XMLHttpRequest();
@@ -59,7 +59,7 @@ form.addEventListener('submit', function (e) {
 
     // Muestra mensaje mientras espera respuesta
     $("#loginModal .modal-body").text('Esperando respuesta...');
-    loginModal.show();
+    modal.show();
 
     request.open('PUT', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
