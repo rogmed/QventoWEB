@@ -95,8 +95,6 @@ function formJson(form) {
         if (key == 'Time') {
             qventoDto["DateOfQvento"] += "T" + value + ":00";
         } else {
-
-        //if (key != 'Date' && key != 'Time') {
             qventoDto[key] = value.trim();
         }
     });
