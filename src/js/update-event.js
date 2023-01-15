@@ -75,8 +75,6 @@ function sendRequest(e) {
     // y si ha recibido un 200 (OK) del servidor.
     request.onreadystatechange = function () {
 
-        checkForm(e);
-
         if (request.readyState == 4 && request.status != 200) {
             $("#Modal .modal-body").text('Ha ocurrido un error');
         }
