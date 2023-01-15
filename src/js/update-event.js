@@ -32,7 +32,6 @@ form.addEventListener('change', async (e) => {
     e.preventDefault();
 
     currentValues = await formJson(form);
-    console.log(currentValues);
 
     for (const [key, value] of Object.entries(currentValues)) {
         let compare;
@@ -43,18 +42,25 @@ form.addEventListener('change', async (e) => {
         }
 
         if (compare != initialValues[key]) {
-            console.log(`${compare} != ${initialValues[key]}`);
             button.disabled = false;
             return;
         } else {
-            console.log(`${compare} == ${initialValues[key]}`);
             button.disabled = true;
         }
     }
 })
 
+// Listener para actuar cuando se haga click en 'submit'
+form.addEventListener('submit', callbackFunction);
+
+function callbackFunction(e) {
+    if (checkForm(e)) {
+        sendRequest(e);
+    }
+}
+
 // Acción botón
-form.addEventListener('submit', function (e) {
+function sendRequest(e) {
     e.preventDefault();
 
     // Muestra mensaje mientras espera respuesta
@@ -69,33 +75,30 @@ form.addEventListener('submit', function (e) {
     // y si ha recibido un 200 (OK) del servidor.
     request.onreadystatechange = function () {
 
+        checkForm(e);
+
         if (request.readyState == 4 && request.status != 200) {
-            $("#loginModal .modal-body").text('Ha ocurrido un error');
+            $("#Modal .modal-body").text('Ha ocurrido un error');
         }
 
         if (request.readyState == 4 && request.status == 200) {
-            // Abre la página que el servidor indica
-            $("#loginModal .modal-body").text('Evento modificado con éxito');
+            // Muestra mensaje de éxito y vuelve a página para visualizar evento(s)
+            $("#Modal .modal-body").text('Evento modificado con éxito');
             initialValues = currentValues;
         }
     }
-})
+}
 
 function formJson(form) {
     const qventoDto = {};
     const myFormData = new FormData(form);
-    let dateOfQvento = "";
+
     myFormData.forEach((value, key) => {
-        if (key == 'DateOfQvento') {
-            dateOfQvento += value;
-        }
-
         if (key == 'Time') {
-            dateOfQvento += "T" + value;
-            qventoDto["DateOfQvento"] = dateOfQvento
-        }
+            qventoDto["DateOfQvento"] += "T" + value + ":00";
+        } else {
 
-        if (key != 'Date' && key != 'Time') {
+        //if (key != 'Date' && key != 'Time') {
             qventoDto[key] = value.trim();
         }
     });
@@ -106,6 +109,7 @@ function formJson(form) {
 const getQvento = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/" + qventoId);
     initialValues = await response.json();
+    initialValues['DateOfQvento'] = initialValues['DateOfQvento'].slice(0, 17);
 
     const { elements } = document.querySelector('form');
 
@@ -120,10 +124,30 @@ const getQvento = async () => {
         } else {
             field && (field.value = value)
         }
-
     }
 };
 
 window.addEventListener("load", function () {
     getQvento();
 });
+
+// Comprueba si el formulario tiene los campos obligatorios y construye el
+// mensaje relevante para devolverlo en un modal
+function checkForm(e) {
+    e.preventDefault();
+    const name = document.getElementById("title").value;
+
+    let message;
+
+    if (name === '') {
+        message = "Por favor, rellene: ";
+        message += "\n - Título del evento";
+
+        $("#Modal .modal-body").text(message);
+        $('#Modal').modal('show');
+        return false;
+
+    } else {
+        return true;
+    }
+}
