@@ -61,16 +61,6 @@
                 <p class="formulario__input-error">Introduzca hora</p>
             </div>
 
-            <!-- Grupo: Descripcion -->
-            <div class="formulario__grupo" id="grupo__description">
-                <label for="description" class="formulario__label">Descripcion (opcional)</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="formulario__input" name="description" id="description">
-                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
-                </div>
-                <p class="formulario__input-error">Máximo 255 caracteres.</p>
-            </div>
-
             <!-- Grupo: Localizacion -->
             <div class="formulario__grupo" id="grupo__location">
                 <label for="location" class="formulario__label">Localizacion (opcional)</label>
@@ -83,6 +73,16 @@
 
             <div class="formulario__mensaje" id="formulario__mensaje">
                 <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+            </div>
+
+            <!-- Grupo: Descripcion -->
+            <div class="formulario__grupo" id="grupo__description">
+                <label for="description" class="formulario__label">Descripcion (opcional)</label>
+                <div class="formulario__grupo-input">
+                    <textarea class="form-control" name="description" id="description" rows="5"> </textarea>
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">Máximo 255 caracteres.</p>
             </div>
 
             <div class="formulario__grupo formulario__grupo-btn-enviar">
