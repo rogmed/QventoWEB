@@ -59,20 +59,25 @@ window.addEventListener("load", function () {
     getQvento();
 });
 
+// Invitaciones
+
 // Hace GET a la API y rellena los campos
 const getQvento = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/" + qventoId);
     qvento = await response.json();
 
-    fillTable(qvento);
+    let invitations = qvento.Invitations;
+
+    fillDetailsTable(qvento);
+    fillInvitationsTable(invitations);
 };
 
 const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-// Llenar tabla html
-function fillTable(qvento) {
+// Llenar tabla con detalles de evento
+function fillDetailsTable(qvento) {
 
     const date = new Date(qvento.DateOfQvento);
     const dateLong = weekdays[date.getDay()] + ', ' + date.getDate() + ' de '
@@ -107,4 +112,23 @@ function fillTable(qvento) {
         `;
  
     document.getElementById("my-qventos").innerHTML = tableBody;
+}
+
+// Llenar tabla con invitaciones
+function fillInvitationsTable(invitations) {
+
+    let tableBody = ``;
+
+    invitations.forEach(invitation => {
+        tableBody += `
+            <tr>
+                <td>${invitation.User.Name + " " + invitation.User.LastName}</td>
+                <td>${invitation.User.Email}</td>
+            </tr>`;
+
+        console.log(invitation.User.Name + " " + invitation.User.LastName);
+    });
+
+
+    document.getElementById("invitations").innerHTML = tableBody;
 }
