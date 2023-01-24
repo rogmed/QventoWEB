@@ -73,7 +73,7 @@ function fillTable(events) {
 // página para ver detalles / modificarlo
 function qventoDetails(qventoId) {
     cookie.createCookie("qventoId", qventoId, 1);
-    window.location.href = "update-event.html";
+    window.location.href = "details-event.html";
 }
 
 // Ordena por fechas
