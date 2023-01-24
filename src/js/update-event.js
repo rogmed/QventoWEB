@@ -18,6 +18,8 @@ const qventoId = cookie.readCookie("qventoId");
 
 // Modal de bootstrap (alerta)
 const modal = new bootstrap.Modal(document.getElementById('Modal'));
+const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+const waitModal = new bootstrap.Modal(document.getElementById('waitModal'));
 
 // Comienza peticion
 const request = new XMLHttpRequest();
@@ -64,8 +66,8 @@ function sendRequest(e) {
     e.preventDefault();
 
     // Muestra mensaje mientras espera respuesta
-    $("#loginModal .modal-body").text('Esperando respuesta...');
-    modal.show();
+    $("#waitModal .modal-body").text('Esperando respuesta...');
+    waitModal.show();
 
     request.open('PUT', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -76,12 +78,16 @@ function sendRequest(e) {
     request.onreadystatechange = function () {
 
         if (request.readyState == 4 && request.status != 200) {
+            waitModal.hide();
             $("#Modal .modal-body").text('Ha ocurrido un error');
+            modal.show();
         }
 
         if (request.readyState == 4 && request.status == 200) {
+            waitModal.hide();
             // Muestra mensaje de éxito y vuelve a página para visualizar evento(s)
-            $("#Modal .modal-body").text('Evento modificado con éxito');
+            $("#successModal .modal-body").text('Evento modificado con éxito');
+            successModal.show();
             initialValues = currentValues;
         }
     }
@@ -131,13 +137,26 @@ window.addEventListener("load", function () {
 // mensaje relevante para devolverlo en un modal
 function checkForm(e) {
     e.preventDefault();
-    const name = document.getElementById("title").value;
+    const title = document.getElementById("title").value;
+    const date = document.getElementById("dateOfQvento").value;
+    const time = document.getElementById("time").value;
 
     let message;
 
-    if (name === '') {
+    if (title === '' || date === '' || time === '') {
         message = "Por favor, rellene: ";
-        message += "\n - Título del evento";
+
+        if (title === '') {
+            message += "\n - Título del evento";
+        }
+
+        if (date === '') {
+            message += "\n - Fecha";
+        }
+
+        if (time === '') {
+            message += "\n - Hora";
+        }
 
         $("#Modal .modal-body").text(message);
         $('#Modal').modal('show');

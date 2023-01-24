@@ -2,8 +2,7 @@ import { Cookie } from './cookie.js';
 import { Navbar } from './navbar.js';
 
 // Variables
-let initialValues;
-let currentValues;
+let qvento;
 
 // Obtiene datos de las cookies
 const cookie = new Cookie();
@@ -17,111 +16,95 @@ navbar.load(token);
 const qventoId = cookie.readCookie("qventoId");
 
 // Modal de bootstrap (alerta)
-const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+const modal = new bootstrap.Modal(document.getElementById('Modal'));
+const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+const successModal = new bootstrap.Modal(document.getElementById('successModal'));
 
-// Comienza peticion
-const request = new XMLHttpRequest();
+// Muestra modal de confirmación para borrar evento
+document.getElementById("delete-button").onclick = function () { showDeleteModal() };
 
-const form = document.getElementById('formulario');
-
-
-//form.addEventListener('change', async (e) => {
-//    e.preventDefault();
-
-//    currentValues = await formJson(form);
-//    console.log(currentValues);
-
-//    for (const [key, value] of Object.entries(currentValues)) {
-//        let compare;
-//        if (key == 'DateOfQvento') {
-//            compare = value.slice(0, -3);
-//        } else {
-//            compare = value.trim();
-//        }
-
-//        if (compare != initialValues[key]) {
-//            console.log(`${compare} != ${initialValues[key]}`);
-//            button.disabled = false;
-//            return;
-//        } else {
-//            console.log(`${compare} == ${initialValues[key]}`);
-//            button.disabled = true;
-//        }
-//    }
-//})
-
-//// Acción botón
-//form.addEventListener('submit', function (e) {
-//    e.preventDefault();
-
-//    // Muestra mensaje mientras espera respuesta
-//    $("#loginModal .modal-body").text('Esperando respuesta...');
-//    loginModal.show();
-
-//    request.open('PUT', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
-//    request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-//    request.send(JSON.stringify(formJson(form)));
-
-//    // Cuando la peticion cambie de estado se comprueba si está en 4 (DONE)
-//    // y si ha recibido un 200 (OK) del servidor.
-//    request.onreadystatechange = function () {
-
-//        if (request.readyState == 4 && request.status != 200) {
-//            $("#loginModal .modal-body").text('Ha ocurrido un error');
-//        }
-
-//        if (request.readyState == 4 && request.status == 200) {
-//            // Abre la página que el servidor indica
-//            $("#loginModal .modal-body").text('Evento modificado con éxito');
-//            initialValues = currentValues;
-//        }
-//    }
-//})
-
-function formJson(form) {
-    const qventoDto = {};
-    const myFormData = new FormData(form);
-    let dateOfQvento = "";
-    myFormData.forEach((value, key) => {
-        if (key == 'DateOfQvento') {
-            dateOfQvento += value;
-        }
-
-        if (key == 'Time') {
-            dateOfQvento += "T" + value;
-            qventoDto["DateOfQvento"] = dateOfQvento
-        }
-
-        if (key != 'Date' && key != 'Time') {
-            qventoDto[key] = value.trim();
-        }
-    });
-    return qventoDto;
+function showDeleteModal() {
+    deleteModal.show();
 }
+
+// Muestra modal de confirmación para borrar evento
+document.getElementById("confirm-delete").onclick = function () { deleteEvent() };
+
+function deleteEvent() {
+    console.log("Delete " + qventoId);
+    const request = new XMLHttpRequest();
+    request.open('DELETE', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
+    request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    request.send();
+
+    // Cuando la peticion cambie de estado se comprueba si está en 4 (DONE)
+    // y si ha recibido un 200 (OK) del servidor.
+    request.onreadystatechange = function () {
+
+        if (request.readyState == 4 && request.status != 200) {
+            $("#Modal .modal-body").text('Ha ocurrido un error');
+            modal.show();
+        }
+
+        if (request.readyState == 4 && request.status == 200) {
+            // Muestra mensaje de éxito y vuelve a página para visualizar evento(s)
+            $("#successModal .modal-body").text('Evento eliminado');
+            successModal.show();
+        }
+    }
+}
+
+// Carga el evento
+window.addEventListener("load", function () {
+    getQvento();
+});
 
 // Hace GET a la API y rellena los campos
 const getQvento = async () => {
     const response = await fetch("https://qvento-api.azurewebsites.net/api/qventos/" + qventoId);
-    initialValues = await response.json();
-    console.log(initialValues);
+    qvento = await response.json();
 
-    const { elements } = document.querySelector('form');
-
-    for (const [key, value] of Object.entries(initialValues)) {
-
-        const field = elements.namedItem(key)
-        if (key == 'DateOfQvento') {
-            let date = value.split("T")[0];
-            field && (field.value = date);
-            let time = value.split("T")[1].slice(0, 5);
-            elements.namedItem("Time").value = time;
-        } else {
-            field && (field.value = value)
-        }
-
-    }
+    fillTable(qvento);
 };
 
-window.addEventListener("load", function () {
-    getQvento();
-});
+const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+// Llenar tabla html
+function fillTable(qvento) {
+
+    const date = new Date(qvento.DateOfQvento);
+    const dateLong = weekdays[date.getDay()] + ', ' + date.getDate() + ' de '
+        + months[date.getMonth()] + ' de ' + date.getFullYear();
+    const time = new Date(qvento.DateOfQvento).toLocaleTimeString("es-Es").slice(0, -3);
+
+    const tableBody = `
+        <tr class="qvento-row" data-qventoid="${qvento.QventoId}">
+            <td>Título:</td>
+            <td colspan="2">${qvento.Title}</td>
+        </tr>
+        <tr>
+            <td>Creado por:</td>
+            <td colspan="2">${qvento.CreatedByNavigation.Name}</td>
+        </tr>
+        <tr>
+            <td>Fecha:</td>
+            <td colspan="2">${dateLong}</td>
+        </tr>
+        <tr>
+            <td>Hora:</td>
+            <td colspan="2">${time}</td>
+        </tr>
+        <tr>
+            <td>Localización:</td>
+            <td colspan="2">${qvento.Location}</td>
+        </tr>
+        <tr>
+            <td>Descripción:</td>
+            <td colspan="2">${qvento.Description}</td>
+        </tr>
+        `;
+ 
+    document.getElementById("my-qventos").innerHTML = tableBody;
+}
