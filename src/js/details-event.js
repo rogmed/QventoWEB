@@ -31,7 +31,6 @@ function showDeleteModal() {
 document.getElementById("confirm-delete").onclick = function () { deleteEvent() };
 
 function deleteEvent() {
-    console.log("Delete " + qventoId);
     const request = new XMLHttpRequest();
     request.open('DELETE', 'https://qvento-api.azurewebsites.net/api/qventos/' + qventoId);
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -58,8 +57,6 @@ function deleteEvent() {
 window.addEventListener("load", function () {
     getQvento();
 });
-
-// Invitaciones
 
 // Hace GET a la API y rellena los campos
 const getQvento = async () => {
@@ -131,4 +128,18 @@ function fillInvitationsTable(invitations) {
 
 
     document.getElementById("invitations").innerHTML = tableBody;
+}
+
+// Invitaciones
+document.getElementById("invitation-button").onclick = function () { sendInvitation() };
+
+function sendInvitation() {
+    console.log("Enviar invitacion")
+    let email = document.getElementById("email").value;
+    let dto = JSON.stringify({ qventoId: qventoId, email: email });
+    console.log(dto);
+    const request = new XMLHttpRequest();
+    request.open('POST', 'https://qvento-api.azurewebsites.net/api/invitation/');
+    request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    request.send(dto);
 }

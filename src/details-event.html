@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="css/main.css" />
 </head>
 
-<body class="bg-dark">
+<body>
+
     <!--BARRA DE NAVEGACION-->
     <div id="nav-placeholder">
     </div>
@@ -73,6 +74,24 @@
             </div>
         </div>
     </div>
+
+    <main>
+            <!-- Grupo: Invitation -->
+            <div class="formulario__grupo" id="grupo__title">
+                <label for="email" class="formulario__label">E-mail</label>
+                <div class="formulario__grupo-input">
+                    <input type="text" class="formulario__input" name="email" id="email">
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+            </div>
+
+            <div class="formulario__grupo">
+            </div>
+
+            <div class="formulario__grupo">
+                <button id="invitation-button" type="submit" class="formulario__btn">Invitar</button>
+            </div>
+    </main>
 
     <!-- Modal -->
     <div style="color: black" class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
