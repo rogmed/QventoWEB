@@ -76,21 +76,21 @@
     </div>
 
     <main>
-            <!-- Grupo: Invitation -->
-            <div class="formulario__grupo" id="grupo__title">
-                <label for="email" class="formulario__label">E-mail</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="formulario__input" name="email" id="email">
-                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
-                </div>
+        <!-- Grupo: Invitation -->
+        <div class="formulario__grupo" id="grupo__title">
+            <label for="email" class="formulario__label">E-mail</label>
+            <div class="formulario__grupo-input">
+                <input type="text" class="formulario__input" name="email" id="email">
+                <i class="formulario__validacion-estado fas fa-times-circle"></i>
             </div>
+        </div>
 
-            <div class="formulario__grupo">
-            </div>
+        <div class="formulario__grupo">
+        </div>
 
-            <div class="formulario__grupo">
-                <button id="invitation-button" type="submit" class="formulario__btn">Invitar</button>
-            </div>
+        <div class="formulario__grupo">
+            <button id="invitation-button" type="submit" class="formulario__btn">Invitar</button>
+        </div>
     </main>
 
     <!-- Modal -->
@@ -143,6 +143,24 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="location.href = 'main.html';" data-bs-dismiss="modal">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Invitation Modal -->
+    <div style="white-space: pre-line" class="modal fade" id="successInvitationModal" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="location.href = 'javascript:window.location.href=window.location.href';" data-bs-dismiss="modal">Volver</button>
                 </div>
             </div>
         </div>

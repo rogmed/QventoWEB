@@ -19,6 +19,7 @@ const qventoId = cookie.readCookie("qventoId");
 const modal = new bootstrap.Modal(document.getElementById('Modal'));
 const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+const successInvitationModal = new bootstrap.Modal(document.getElementById('successInvitationModal'));
 
 // Muestra modal de confirmación para borrar evento
 document.getElementById("delete-button").onclick = function () { showDeleteModal() };
@@ -122,8 +123,6 @@ function fillInvitationsTable(invitations) {
                 <td>${invitation.User.Name + " " + invitation.User.LastName}</td>
                 <td>${invitation.User.Email}</td>
             </tr>`;
-
-        console.log(invitation.User.Name + " " + invitation.User.LastName);
     });
 
 
@@ -134,12 +133,34 @@ function fillInvitationsTable(invitations) {
 document.getElementById("invitation-button").onclick = function () { sendInvitation() };
 
 function sendInvitation() {
-    console.log("Enviar invitacion")
+    
     let email = document.getElementById("email").value;
     let dto = JSON.stringify({ qventoId: qventoId, email: email });
-    console.log(dto);
+    
     const request = new XMLHttpRequest();
     request.open('POST', 'https://qvento-api.azurewebsites.net/api/invitation/');
     request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     request.send(dto);
+
+    // Cuando la peticion cambie de estado se comprueba si está en 4 (DONE)
+    // y si ha recibido un 200 (OK) del servidor.
+    request.onreadystatechange = function () {
+
+        if (request.readyState == 4 && request.status != 200) {
+            $("#Modal .modal-body").text('Ha ocurrido un error');
+            modal.show();
+        }
+
+        if (request.readyState == 4 && request.status == 204) {
+            $("#Modal .modal-body").text('No existe un usuario con el e-mail ' +
+                email + ' registrado en Qvento.');
+            modal.show();
+        }
+
+        if (request.readyState == 4 && request.status == 200) {
+            // Muestra mensaje de éxito y vuelve a página para visualizar evento(s)
+            $("#successInvitationModal .modal-body").text('Usuario con email ' + email + ' invitado.');
+            successInvitationModal.show();
+        }
+    }
 }
