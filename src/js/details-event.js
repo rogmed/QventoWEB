@@ -151,6 +151,11 @@ function sendInvitation() {
             modal.show();
         }
 
+        if (request.readyState == 4 && request.status == 409) {
+            $("#Modal .modal-body").text('Error: Ya existe invitación para ' + email);
+            modal.show();
+        }
+
         if (request.readyState == 4 && request.status == 204) {
             $("#Modal .modal-body").text('No existe un usuario con el e-mail ' +
                 email + ' registrado en Qvento.');
